@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    url_api_number: 'http://163.172.67.144:8042/api/v1/validate'
+    login_api_number: 'api'
+    password_api_number: 'azpihviyazfb'
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +28,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\NumberService:
+        autowire: true
