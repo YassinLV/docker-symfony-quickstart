@@ -101,9 +101,9 @@ class User implements \JsonSerializable
         return $this;
     }
 
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
-        return !$this->countryCode ? 'FR' : $this->countryCode;
+        return $this->countryCode;
     }
 
     public function setCountryCode(string $countryCode): self
@@ -113,10 +113,7 @@ class User implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInternationalNumber()
+    public function getInternationalNumber(): ?string
     {
         return $this->internationalNumber;
     }
