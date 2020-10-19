@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="users")
  */
-class User
+class User implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -37,6 +37,16 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $number;
+
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $countryCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $internationalNumber;
 
     public function getId(): ?int
     {
@@ -89,5 +99,40 @@ class User
         $this->number = $number;
 
         return $this;
+    }
+
+    public function getCountryCode(): string
+    {
+        return !$this->countryCode ? 'FR' : $this->countryCode;
+    }
+
+    public function setCountryCode(string $countryCode): self
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInternationalNumber()
+    {
+        return $this->internationalNumber;
+    }
+
+    public function setInternationalNumber(?string $internationalNumber): self
+    {
+        $this->internationalNumber = $internationalNumber;
+
+        return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'phoneNumber' => $this->getNumber(),
+            'countryCode' => $this->getCountryCode()
+        ];
     }
 }
