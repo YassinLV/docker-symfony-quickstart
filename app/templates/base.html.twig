@@ -6,6 +6,11 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <ul>
+            <li><a href="{{ path('user_added') }}">'/'</a></li>
+            <li><a href="{{ path('user_register_success') }}">'/success'</a></li>
+            <li><a href="{{ path('users_list') }}">'/list'</a></li>
+        </ul>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

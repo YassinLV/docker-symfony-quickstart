@@ -6,33 +6,36 @@
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .table td { text-align: center }
 </style>
 
 <div class="example-wrapper">
 
     <table class="table">
         <thead>
-        <tr>
-            <th>Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Country</th>
-            <th>Phone number national</th>
-            <th>Phone number international</th>
-        </tr>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Country</th>
+                <th>Phone number national</th>
+                <th>Phone number international</th>
+            </tr>
         </thead>
+
         <tbody>
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.lastName }}</td>
                 <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
                 <td>{{ user.country }}</td>
+                <td>{{ user.number }}</td>
                 <td>{{ user.number }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">no users records found</td>
             </tr>
         {% endfor %}
         </tbody>
