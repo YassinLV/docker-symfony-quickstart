@@ -13,6 +13,26 @@ open [http://localhost:8000](http://localhost:8000)
 
 -----
 
+## Set Database
+
+```bash
+docker exec -ti docker_app_1 bash
+cd app
+php bin/console doctrine:migrations:migrate
+```
+
+-----
+
+## Load User Fixtures
+
+```bash
+docker exec -ti docker_app_1 bash
+cd app
+php bin/console doctrine:fixtures:load
+```
+
+-----
+
 ## Clear symfony cache
 
 ```bash
