@@ -1,5 +1,32 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+<style>
+    #callMeSubmit { align-self: center}
+</style>
 
-    <button class="btn">{{ button_label|default('Call me') }}</button>
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.firstName) }}
+        </div>
+        <div class="col-6" >
+            {{ form_row(form.lastName) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.country) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.number) }}
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="callMeSubmit">{{ button_label|default('Call me') }}</button>
 {{ form_end(form) }}

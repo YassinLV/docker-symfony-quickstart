@@ -29,7 +29,9 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $numberService->callApi($user);
+            $user->setCountryCode($form->getData()->getCountry());
+            $internationalNumber = $numberService->getInternationNumberFromApi($user);
+            $user->setInternationalNumber($internationalNumber);
 
             $entityManager->persist($user);
             $entityManager->flush();
