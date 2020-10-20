@@ -18,6 +18,7 @@ class NumberService
 {
     CONST OUTPUT_INDEX = 'output';
     CONST IS_VALID_OUTPUT_INDEX = 'isValid';
+    CONST INTERNATIONAL_NUMBER_OUTPUT_INDEX = 'international';
 
     private $params;
     private $client;
@@ -31,12 +32,23 @@ class NumberService
         $this->client = $client;
     }
 
-    public function callApi(User $user)
+    /**
+     * get International Number from the ApiCall
+     */
+    public function getInternationNumberFromApi(User $user)
+    {
+        return $this->callApi($user->jsonSerialize());
+    }
+
+    /**
+     * call external api to validate phone number format
+     */
+    private function callApi(array $data)
     {
         $url = $this->params->get('url_api_number');
         $login = $this->params->get('login_api_number');
         $password = $this->params->get('password_api_number');
-        $jsonData = json_encode([$user->jsonSerialize()]);
+        $jsonData = json_encode([$data]);
 
         $request = $this->client->request(
             Request::METHOD_POST, $url, [
@@ -48,9 +60,12 @@ class NumberService
             'body' => $jsonData
         ]);
 
-        $this->handleRequest($request);
+        return $this->handleRequest($request);
     }
 
+    /**
+     * Make many check to get the phone number format
+     */
     private function handleRequest(ResponseInterface $response)
     {
         if (Response::HTTP_OK !== $response->getStatusCode()) {
@@ -58,8 +73,6 @@ class NumberService
         }
 
         $data = json_decode($response->getContent(), true);
-
-        dump($data[0]);
 
         if (empty($data) || !array_key_exists(self::OUTPUT_INDEX, $data[0])) {
             throw new \Exception('The data form request could not be handle.');
@@ -69,16 +82,10 @@ class NumberService
             throw new \Exception('The number format is invalid.');
         }
 
-        dump('toto');
-        die;
-    }
-
-    private function isValidFormat()
-    {
-        if(false) {
-            return false;
+        if (!isset($data[0][self::OUTPUT_INDEX][self::INTERNATIONAL_NUMBER_OUTPUT_INDEX])) {
+            throw new \Exception('The international number is not found.');
         }
 
-        return true;
+        return $data[0][self::OUTPUT_INDEX][self::INTERNATIONAL_NUMBER_OUTPUT_INDEX];
     }
 }
